@@ -11,22 +11,22 @@
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {2, 5}
+  {18, -6, -7, 8}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{-3, -4}
+  ,{-10, 9, 3, -1}
 
   // IMU Port
-  ,21
+  ,12
 
   // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
   //    (or tracking wheel diameter)
-  ,4.125
+  ,2.75
 
   // Cartridge RPM
   //   (or tick per rotation if using tracking wheels)
-  ,200
+  ,600
 
   // External Gear Ratio (MUST BE DECIMAL)
   //    (or gear ratio of tracking wheel)
@@ -35,15 +35,15 @@ Drive chassis (
   ,1
 
   // Uncomment if using tracking wheels
-  /*
+  
   // Left Tracking Wheel Ports (negative port will reverse it!)
   // ,{1, 2} // 3 wire encoder
-  // ,8 // Rotation sensor
+  ,20 // Rotation sensor
 
   // Right Tracking Wheel Ports (negative port will reverse it!)
   // ,{-3, -4} // 3 wire encoder
-  // ,-9 // Rotation sensor
-  */
+  ,13 // Rotation sensor
+  
 
   // Uncomment if tracking wheels are plugged into a 3 wire expander
   // 3 Wire Port Expander Smart Port
