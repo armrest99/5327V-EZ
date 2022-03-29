@@ -77,18 +77,17 @@ void drive_example() {
   // for slew, only enable it when the drive distance is greater then the slew distance + a few inches
 
 
-  chassis.set_drive_pid(6, DRIVE_SPEED, true);
+  chassis.set_drive_pid(12, DRIVE_SPEED, true);
   chassis.wait_drive();
-
-  chassis.set_drive_pid(-3, DRIVE_SPEED);
+  chassis.set_drive_pid(-3, DRIVE_SPEED, true);
   chassis.wait_drive();
-
-  chassis.set_drive_pid(-3, DRIVE_SPEED);
+  chassis.set_drive_pid(0, DRIVE_SPEED, true);
   chassis.wait_drive();
+  //chassis.set_drive_pid(-3, DRIVE_SPEED);
 }
 
 
-
+/*
 ///
 // Turn Example
 ///
@@ -228,8 +227,8 @@ void tug (int attempts) {
   }
 }
 
-// If there is no interference, robot will drive forward and turn 90 degrees. 
-// If interfered, robot will drive forward and then attempt to drive backwards. 
+// If there is no interference, robot will drive forward and turn 90 degrees.
+// If interfered, robot will drive forward and then attempt to drive backwards.
 void interfered_example() {
  chassis.set_drive_pid(24, DRIVE_SPEED, true);
  chassis.wait_drive();
@@ -242,7 +241,7 @@ void interfered_example() {
  chassis.set_turn_pid(90, TURN_SPEED);
  chassis.wait_drive();
 }
-
+*/
 
 
 // . . .
