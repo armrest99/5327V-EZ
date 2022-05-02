@@ -171,27 +171,27 @@ void opcontrol() {
   while (true) {
 
     chassis.tank(); // Tank control
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A) && !a_pressed_last_time)
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A))
 		{
 			boner_clamp_retracted = !boner_clamp_retracted;
 			boner_clamp.set_value(boner_clamp_retracted);
 		}
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && !b_pressed_last_time)
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B))
 		{
 			ass_clamp_retracted = !ass_clamp_retracted;
 			ass_clamp.set_value(ass_clamp_retracted);
 		}
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) && !left_pressed_last_time)
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT))
     {
       Extendo_retracted = !Extendo_retracted;
 			Extendo.set_value(Extendo_retracted);
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && !down_pressed_last_time)
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN))
     {
       flipping_retracted = !flipping_retracted;
       flipping.set_value(flipping_retracted);
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && !up_pressed_last_time)
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN))
     {
       pto_retracted = !pto_retracted;
       pto.set_value(pto_retracted);
