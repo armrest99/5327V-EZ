@@ -110,7 +110,7 @@ void west_side() {
   erector = -127;
   pto.set_value(true);
   chassis.set_drive_pid(-24, DRIVE_SPEED, true);
-  chassis.set_swing_pid(ez::RIGHT_SWING, -55, TURN_SPEED);
+  chassis.set_swing_pid(ez::LEFT_SWING, -85, TURN_SPEED);
   chassis.wait_drive();
   chassis.set_drive_pid(-12, DRIVE_SPEED, true);
   chassis.wait_drive();
