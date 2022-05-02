@@ -50,6 +50,7 @@ pros::ADIDigitalOut boner_clamp('A');
 pros::ADIDigitalOut ass_clamp('B');
 pros::ADIDigitalOut flipping('C');
 pros::ADIDigitalOut Extendo('D');
+pros::ADIDigitalOut pto('E');
 
 // More includes here...
 //

@@ -48,8 +48,8 @@ Drive chassis (
   // ,1
 );
 
-bool boner_clamp_retracted = true, ass_clamp_retracted = true; bool Extendo_retracted = true, flipping_retracted = true;
-bool a_pressed_last_time = false, b_pressed_last_time = false; bool left_pressed_last_time = false; bool down_pressed_last_time = false;
+bool boner_clamp_retracted = true, ass_clamp_retracted = true; bool Extendo_retracted = true, flipping_retracted = true; bool pto_retracted = true;
+bool a_pressed_last_time = false, b_pressed_last_time = false; bool left_pressed_last_time = false; bool down_pressed_last_time = false; bool up_pressed_last_time = false;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -63,6 +63,9 @@ void initialize() {
 	// reset clamps
 	boner_clamp.set_value(true);
 	ass_clamp.set_value(true);
+  flipping.set_value(true);
+  Extendo.set_value(true);
+  pto.set_value(true);
 
   // Print our branding over your terminal :D
   ez::print_ez_template();
@@ -187,6 +190,11 @@ void opcontrol() {
     {
       flipping_retracted = !flipping_retracted;
       flipping.set_value(flipping_retracted);
+    }
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && !up_pressed_last_time)
+    {
+      pto_retracted = !pto_retracted;
+      pto.set_value(pto_retracted);
     }
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
     {

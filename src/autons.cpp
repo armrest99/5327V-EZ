@@ -6,7 +6,7 @@
 /////
 
 
-const int DRIVE_SPEED = 127; // This is 110/127 (around 87% of max speed).  We don't suggest making this 127.
+const int DRIVE_SPEED = 110; // This is 110/127 (around 87% of max speed).  We don't suggest making this 127.
                              // If this is 127 and the robot tries to heading correct, it's only correcting by
                              // making one side slower.  When this is 87%, it's correcting by making one side
                              // faster and one side slower, giving better heading correction.
@@ -72,18 +72,23 @@ void east_side() {
   erector = 80;
   chassis.set_swing_pid(ez::RIGHT_SWING, 35, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(36, DRIVE_SPEED, true);
+  pto.set_value(false);
+  chassis.set_drive_pid(36, 127, true);
   chassis.wait_drive();
   boner_clamp.set_value(true);
   erector = -127;
-  chassis.set_swing_pid(ez::LEFT_SWING, -35, TURN_SPEED);
-  chassis.wait_drive();
+  pto.set_value(true);
   chassis.set_drive_pid(-24, DRIVE_SPEED, true);
+  chassis.set_swing_pid(ez::LEFT_SWING, -55, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(0, DRIVE_SPEED, true);
+  chassis.set_drive_pid(-12, DRIVE_SPEED, true);
   chassis.wait_drive();
   ass_clamp.set_value(true);
   rings = 127;
+  chassis.set_drive_pid(12, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(0, DRIVE_SPEED, true);
+  chassis.wait_drive();
   // The first parameter is target degrees
   // The second parameter is max speed the robot will drive at
 
@@ -102,18 +107,23 @@ void west_side() {
   erector = 80;
   chassis.set_swing_pid(ez::LEFT_SWING, 35, TURN_SPEED);
   chassis.wait_drive();
+  pto.set_value(false);
   chassis.set_drive_pid(36, DRIVE_SPEED, true);
   chassis.wait_drive();
   boner_clamp.set_value(true);
   erector = -127;
-  chassis.set_swing_pid(ez::RIGHT_SWING, -35, TURN_SPEED);
-  chassis.wait_drive();
+  pto.set_value(true);
   chassis.set_drive_pid(-24, DRIVE_SPEED, true);
+  chassis.set_swing_pid(ez::RIGHT_SWING, -55, TURN_SPEED);
   chassis.wait_drive();
-  chassis.set_drive_pid(0, DRIVE_SPEED, true);
+  chassis.set_drive_pid(-12, DRIVE_SPEED, true);
   chassis.wait_drive();
   ass_clamp.set_value(true);
   rings = 127;
+  chassis.set_drive_pid(12, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(0, DRIVE_SPEED, true);
+  chassis.wait_drive();
 }
 
 ///
