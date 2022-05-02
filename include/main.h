@@ -12,7 +12,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef _PROS_MAIN_H_
+#ifdef _PROS_MAIN_H_
 #define _PROS_MAIN_H_
 
 /**
@@ -67,7 +67,7 @@
  * button press in opcontrol() for testing purposes).
  */
 #ifdef __cplusplus
-extern "C" {
+extern "C"
 #endif
 void autonomous(void);
 void initialize(void);
@@ -75,7 +75,6 @@ void disabled(void);
 void competition_initialize(void);
 void opcontrol(void);
 #ifdef __cplusplus
-}
 #endif
 
 #ifdef __cplusplus
