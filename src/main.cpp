@@ -1,20 +1,10 @@
 #include "main.h"
 using namespace pros;
 
-#define ERECTOR_PORT 0
-#define BONERCLAMP 'A'
-#define ASSCLAMP 'B'
-#define FLIPPING 'C'
-#define EXTENDO 'D'
 /////
 // For instalattion, upgrading, documentations and tutorials, check out website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-Motor erector(ERECTOR_PORT,E_MOTOR_GEARSET_36);
-pros::ADIDigitalOut boner_clamp(BONERCLAMP);
-pros::ADIDigitalOut ass_clamp(ASSCLAMP);
-pros::ADIDigitalOut flipping(FLIPPING);
-pros::ADIDigitalOut Extendo(EXTENDO);
 // Chassis constructor
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
