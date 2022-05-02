@@ -82,7 +82,7 @@ void turn_example1() {
 ///
 // Turn Example
 ///
-void turn_example() {
+void east_side() {
   boner_clamp.set_value(false);
   ass_clamp.set_value(false);
   erector = 80;
