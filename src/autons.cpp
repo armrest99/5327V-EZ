@@ -67,8 +67,6 @@ void modified_exit_condition() {
 
 
 void east_side() {
-  boner_clamp.set_value(false);
-  ass_clamp.set_value(false);
   erector = 80;
   chassis.set_swing_pid(ez::RIGHT_SWING, 35, TURN_SPEED);
   chassis.wait_drive();
@@ -101,8 +99,6 @@ void east_side() {
   chassis.wait_drive();*/
 }
 void west_side() {
-  boner_clamp.set_value(false);
-  ass_clamp.set_value(false);
   erector = 80;
   chassis.set_swing_pid(ez::LEFT_SWING, 35, TURN_SPEED);
   chassis.wait_drive();

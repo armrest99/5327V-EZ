@@ -48,7 +48,7 @@ Drive chassis (
   // ,1
 );
 
-bool boner_clamp_engaged = true, ass_clamp_engaged = false; bool Extendo_engaged = true, flipping_engaged = true; bool pto_engaged = true;
+bool boner_clamp_engaged = false, ass_clamp_engaged = false; bool Extendo_engaged = false, flipping_engaged = false; bool pto_engaged = true;
 bool a_pressed_last_time = false, b_pressed_last_time = false; bool left_pressed_last_time = false; bool down_pressed_last_time = false; bool up_pressed_last_time = false;
 
 /**
@@ -61,10 +61,10 @@ void initialize() {
   pros::lcd::initialize();
 
 	// reset clamps
-	boner_clamp.set_value(true);
+	boner_clamp.set_value(false);
 	ass_clamp.set_value(false);
-  flipping.set_value(true);
-  Extendo.set_value(true);
+  flipping.set_value(false);
+  Extendo.set_value(false);
   pto.set_value(true);
 
   // Print our branding over your terminal :D
