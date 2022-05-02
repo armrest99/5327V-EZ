@@ -143,6 +143,7 @@ void autonomous() {
 
   //ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
   void east_side();
+  //void west_side();
 }
 
 
