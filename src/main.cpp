@@ -48,7 +48,7 @@ Drive chassis (
   // ,1
 );
 
-bool boner_clamp_engaged = false, ass_clamp_engaged = false; bool Extendo_engaged = false, flipping_engaged = false; bool pto_engaged = true;
+bool boner_clamp_engaged = false, ass_clamp_engaged = true; bool Extendo_engaged = false, flipping_engaged = false; bool pto_engaged = true;
 bool a_pressed_last_time = false, b_pressed_last_time = false; bool left_pressed_last_time = false; bool down_pressed_last_time = false; bool up_pressed_last_time = false;
 
 /**
@@ -62,7 +62,7 @@ void initialize() {
 
 	// reset clamps
 	boner_clamp.set_value(false);
-	ass_clamp.set_value(false);
+	ass_clamp.set_value(true);
   flipping.set_value(false);
   Extendo.set_value(false);
   pto.set_value(true);
@@ -171,27 +171,27 @@ void opcontrol() {
   while (true) {
 
     chassis.tank(); // Tank control
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A) && !a_pressed_last_time)
-		{
-			boner_clamp_engaged = !boner_clamp_engaged;
-			boner_clamp.set_value(boner_clamp_engaged);
-		}
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && !b_pressed_last_time)
-		{
-			ass_clamp_engaged = !ass_clamp_engaged;
-			ass_clamp.set_value(ass_clamp_engaged);
-		}
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) && !left_pressed_last_time)
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A))
+        {
+            boner_clamp_engaged = !boner_clamp_engaged;
+            boner_clamp.set_value(boner_clamp_engaged);
+        }
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B))
+        {
+            ass_clamp_engaged = !ass_clamp_engaged;
+            ass_clamp.set_value(ass_clamp_engaged);
+        }
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT))
     {
       Extendo_engaged = !Extendo_engaged;
-			Extendo.set_value(Extendo_engaged);
+            Extendo.set_value(Extendo_engaged);
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && !down_pressed_last_time)
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN))
     {
       flipping_engaged = !flipping_engaged;
       flipping.set_value(flipping_engaged);
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && !up_pressed_last_time)
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN))
     {
       pto_engaged = !pto_engaged;
       pto.set_value(pto_engaged);
@@ -204,11 +204,6 @@ void opcontrol() {
     {
       erector = -127;
     }
-
-		a_pressed_last_time = master.get_digital(pros::E_CONTROLLER_DIGITAL_A);
-		b_pressed_last_time = master.get_digital(pros::E_CONTROLLER_DIGITAL_B);
-    left_pressed_last_time = master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
-    down_pressed_last_time = master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
 
 
 
