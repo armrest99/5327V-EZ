@@ -48,7 +48,7 @@ Drive chassis (
   // ,1
 );
 
-bool boner_clamp_retracted = true, ass_clamp_retracted = true; bool Extendo_retracted = true, flipping_retracted = true; bool pto_retracted = true;
+bool boner_clamp_engaged = true, ass_clamp_engaged = false; bool Extendo_engaged = true, flipping_engaged = true; bool pto_engaged = true;
 bool a_pressed_last_time = false, b_pressed_last_time = false; bool left_pressed_last_time = false; bool down_pressed_last_time = false; bool up_pressed_last_time = false;
 
 /**
@@ -62,7 +62,7 @@ void initialize() {
 
 	// reset clamps
 	boner_clamp.set_value(true);
-	ass_clamp.set_value(true);
+	ass_clamp.set_value(false);
   flipping.set_value(true);
   Extendo.set_value(true);
   pto.set_value(true);
@@ -173,28 +173,28 @@ void opcontrol() {
     chassis.tank(); // Tank control
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A) && !a_pressed_last_time)
 		{
-			boner_clamp_retracted = !boner_clamp_retracted;
-			boner_clamp.set_value(boner_clamp_retracted);
+			boner_clamp_engaged = !boner_clamp_engaged;
+			boner_clamp.set_value(boner_clamp_engaged);
 		}
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && !b_pressed_last_time)
 		{
-			ass_clamp_retracted = !ass_clamp_retracted;
-			ass_clamp.set_value(ass_clamp_retracted);
+			ass_clamp_engaged = !ass_clamp_engaged;
+			ass_clamp.set_value(ass_clamp_engaged);
 		}
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) && !left_pressed_last_time)
     {
-      Extendo_retracted = !Extendo_retracted;
-			Extendo.set_value(Extendo_retracted);
+      Extendo_engaged = !Extendo_engaged;
+			Extendo.set_value(Extendo_engaged);
     }
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && !down_pressed_last_time)
     {
-      flipping_retracted = !flipping_retracted;
-      flipping.set_value(flipping_retracted);
+      flipping_engaged = !flipping_engaged;
+      flipping.set_value(flipping_engaged);
     }
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && !up_pressed_last_time)
     {
-      pto_retracted = !pto_retracted;
-      pto.set_value(pto_retracted);
+      pto_engaged = !pto_engaged;
+      pto.set_value(pto_engaged);
     }
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
     {

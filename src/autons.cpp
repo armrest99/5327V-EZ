@@ -84,7 +84,6 @@ void east_side() {
   chassis.set_drive_pid(-12, DRIVE_SPEED, true);
   chassis.wait_drive();
   ass_clamp.set_value(true);
-  rings = 127;
   chassis.set_drive_pid(12, DRIVE_SPEED, true);
   chassis.wait_drive();
   chassis.set_drive_pid(0, DRIVE_SPEED, true);
@@ -119,7 +118,6 @@ void west_side() {
   chassis.set_drive_pid(-12, DRIVE_SPEED, true);
   chassis.wait_drive();
   ass_clamp.set_value(true);
-  rings = 127;
   chassis.set_drive_pid(12, DRIVE_SPEED, true);
   chassis.wait_drive();
   chassis.set_drive_pid(0, DRIVE_SPEED, true);
