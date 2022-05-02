@@ -96,8 +96,25 @@ void east_side() {
   chassis.set_turn_pid(0, TURN_SPEED);
   chassis.wait_drive();*/
 }
-
-
+void west_side() {
+  boner_clamp.set_value(false);
+  ass_clamp.set_value(false);
+  erector = 80;
+  chassis.set_swing_pid(ez::LEFT_SWING, 35, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(36, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  boner_clamp.set_value(true);
+  erector = -127;
+  chassis.set_swing_pid(ez::RIGHT_SWING, -35, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-24, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(0, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  ass_clamp.set_value(true);
+  rings = 127;
+}
 
 ///
 // Combining Turn + Drive
