@@ -1,13 +1,12 @@
 #include "main.h"
 
-
 /////
 // For instalattion, upgrading, documentations and tutorials, check out website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
 
 
-const int DRIVE_SPEED = 110; // This is 110/127 (around 87% of max speed).  We don't suggest making this 127.
+const int DRIVE_SPEED = 127; // This is 110/127 (around 87% of max speed).  We don't suggest making this 127.
                              // If this is 127 and the robot tries to heading correct, it's only correcting by
                              // making one side slower.  When this is 87%, it's correcting by making one side
                              // faster and one side slower, giving better heading correction.
@@ -70,40 +69,48 @@ void modified_exit_condition() {
 ///
 // Drive Example
 ///
-void drive_example() {
+void turn_example1() {
   // The first parameter is target inches
   // The second parameter is max speed the robot will drive at
   // The third parameter is a boolean (true or false) for enabling/disabling a slew at the start of drive motions
   // for slew, only enable it when the drive distance is greater then the slew distance + a few inches
-
-
-  chassis.set_drive_pid(12, DRIVE_SPEED, true);
-  chassis.wait_drive();
-  chassis.set_drive_pid(-3, DRIVE_SPEED, true);
-  chassis.wait_drive();
-  chassis.set_drive_pid(0, DRIVE_SPEED, true);
-  chassis.wait_drive();
   //chassis.set_drive_pid(-3, DRIVE_SPEED);
 }
 
 
-/*
+
 ///
 // Turn Example
 ///
 void turn_example() {
+  boner_clamp.set_value(false);
+  ass_clamp.set_value(false);
+  erector = 80;
+  chassis.set_swing_pid(ez::RIGHT_SWING, 35, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(36, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  boner_clamp.set_value(true);
+  erector = -127;
+  chassis.set_swing_pid(ez::LEFT_SWING, -35, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-24, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(0, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  ass_clamp.set_value(true);
+  rings = 127;
   // The first parameter is target degrees
   // The second parameter is max speed the robot will drive at
 
-
-  chassis.set_turn_pid(90, TURN_SPEED);
+  /*chassis.set_turn_pid(90, TURN_SPEED);
   chassis.wait_drive();
 
   chassis.set_turn_pid(45, TURN_SPEED);
   chassis.wait_drive();
 
   chassis.set_turn_pid(0, TURN_SPEED);
-  chassis.wait_drive();
+  chassis.wait_drive();*/
 }
 
 
@@ -170,10 +177,10 @@ void swing_example() {
   // The third parameter is speed of the moving side of the drive
 
 
-  chassis.set_swing_pid(ez::LEFT_SWING, 45, SWING_SPEED);
+  chassis.set_swing_pid(ez::RIGHT_SWING, 45, SWING_SPEED);
   chassis.wait_drive();
 
-  chassis.set_drive_pid(24, DRIVE_SPEED, true);
+  chassis.set_drive_pid(16, DRIVE_SPEED, true);
   chassis.wait_until(12);
 
   chassis.set_swing_pid(ez::RIGHT_SWING, 0, SWING_SPEED);
@@ -227,8 +234,8 @@ void tug (int attempts) {
   }
 }
 
-// If there is no interference, robot will drive forward and turn 90 degrees.
-// If interfered, robot will drive forward and then attempt to drive backwards.
+//If there is no interference, robot will drive forward and turn 90 degrees.
+//If interfered, robot will drive forward and then attempt to drive backwards.
 void interfered_example() {
  chassis.set_drive_pid(24, DRIVE_SPEED, true);
  chassis.wait_drive();
@@ -238,12 +245,14 @@ void interfered_example() {
    return;
  }
 
- chassis.set_turn_pid(90, TURN_SPEED);
- chassis.wait_drive();
+ chassis.set_swing_pid(ez::RIGHT_SWING, 45, SWING_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-16, DRIVE_SPEED, true);
+  chassis.wait_drive();
+ chassis.set_drive_pid(0, DRIVE_SPEED, true);
 }
-*/
+
 
 
 // . . .
-// Make your own autonomous functions here!
 // . . .

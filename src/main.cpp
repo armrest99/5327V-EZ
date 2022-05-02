@@ -1,28 +1,36 @@
 #include "main.h"
+using namespace pros;
 
-
+#define ERECTOR_PORT 0
+#define BONERCLAMP 'A'
+#define ASSCLAMP 'B'
+#define FLIPPING 'C'
+#define EXTENDO 'D'
 /////
 // For instalattion, upgrading, documentations and tutorials, check out website!
 // https://ez-robotics.github.io/EZ-Template/
 /////
-
-
+Motor erector(ERECTOR_PORT,E_MOTOR_GEARSET_36);
+pros::ADIDigitalOut boner_clamp(BONERCLAMP);
+pros::ADIDigitalOut ass_clamp(ASSCLAMP);
+pros::ADIDigitalOut flipping(FLIPPING);
+pros::ADIDigitalOut Extendo(EXTENDO);
 // Chassis constructor
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {18, -6, -7, 8}
+  {18, -6, -7}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{-10, 9, 3, -1}
+  ,{-10, 9, 3}
 
   // IMU Port
   ,12
 
   // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
   //    (or tracking wheel diameter)
-  ,2.75
+  ,4.125
 
   // Cartridge RPM
   //   (or tick per rotation if using tracking wheels)
@@ -32,25 +40,26 @@ Drive chassis (
   //    (or gear ratio of tracking wheel)
   // eg. if your drive is 84:36 where the 36t is powered, your RATIO would be 2.333.
   // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 0.6.
-  ,1
+  ,0.6
 
   // Uncomment if using tracking wheels
-  
+
   // Left Tracking Wheel Ports (negative port will reverse it!)
   // ,{1, 2} // 3 wire encoder
-  ,{20} // Rotation sensor
+   // Rotation sensor
 
   // Right Tracking Wheel Ports (negative port will reverse it!)
   // ,{-3, -4} // 3 wire encoder
-  ,{13} // Rotation sensor
-  
+  // Rotation sensor
+
 
   // Uncomment if tracking wheels are plugged into a 3 wire expander
   // 3 Wire Port Expander Smart Port
   // ,1
 );
 
-
+bool boner_clamp_retracted = true, ass_clamp_retracted = true; bool Extendo_retracted = true, flipping_retracted = true;
+bool a_pressed_last_time = false, b_pressed_last_time = false; bool left_pressed_last_time = false; bool down_pressed_last_time = false;
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -59,31 +68,37 @@ Drive chassis (
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+  pros::lcd::initialize();
+
+	// reset clamps
+	boner_clamp.set_value(true);
+	ass_clamp.set_value(true);
+
   // Print our branding over your terminal :D
   ez::print_ez_template();
-  
+
   pros::delay(500); // Stop the user from doing anything while legacy ports configure.
 
   // Configure your chassis controls
   chassis.toggle_modify_curve_with_controller(true); // Enables modifying the controller curve with buttons on the joysticks
   chassis.set_active_brake(0); // Sets the active brake kP. We recommend 0.1.
-  chassis.set_curve_default(0, 0); // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)  
+  chassis.set_curve_default(0, 0); // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
   default_constants(); // Set the drive to your own constants from autons.cpp!
   exit_condition_defaults(); // Set the exit conditions to your own constants from autons.cpp!
 
   // These are already defaulted to these buttons, but you can change the left/right curve buttons here!
-  // chassis.set_left_curve_buttons (pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT); // If using tank, only the left side is used. 
+  // chassis.set_left_curve_buttons (pros::E_CONTROLLER_DIGITAL_LEFT, pros::E_CONTROLLER_DIGITAL_RIGHT); // If using tank, only the left side is used.
   // chassis.set_right_curve_buttons(pros::E_CONTROLLER_DIGITAL_Y,    pros::E_CONTROLLER_DIGITAL_A);
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.add_autons({
-    Auton("Example Drive\n\nDrive forward and come back.", drive_example),
+    Auton("Example Drive\n\nDrive forward and come back.", turn_example)
     /*Auton("Example Turn\n\nTurn 3 times.", turn_example),
     Auton("Drive and Turn\n\nDrive forward, turn, come back. ", drive_and_turn),
     Auton("Drive and Turn\n\nSlow down during drive.", wait_until_change_speed),
     Auton("Swing Example\n\nSwing, drive, swing.", swing_example),
-    Auton("Combine all 3 movements", combining_movements),
-    Auton("Interference\n\nAfter driving forward, robot performs differently if interfered or not.", interfered_example),*/
+    Auton("Combine all 3 movements", combining_movements),*/
+    //Auton("Interference\n\nAfter driving forward, robot performs differently if interfered or not.", interfered_example),
   });
 
   // Initialize chassis and auton selector
@@ -161,6 +176,42 @@ void opcontrol() {
   while (true) {
 
     chassis.tank(); // Tank control
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A) && !a_pressed_last_time)
+		{
+			boner_clamp_retracted = !boner_clamp_retracted;
+			boner_clamp.set_value(boner_clamp_retracted);
+		}
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_B) && !b_pressed_last_time)
+		{
+			ass_clamp_retracted = !ass_clamp_retracted;
+			ass_clamp.set_value(ass_clamp_retracted);
+		}
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) && !left_pressed_last_time)
+    {
+      Extendo_retracted = !Extendo_retracted;
+			Extendo.set_value(Extendo_retracted);
+    }
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) && !down_pressed_last_time)
+    {
+      flipping_retracted = !flipping_retracted;
+      flipping.set_value(flipping_retracted);
+    }
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+    {
+      erector = 127;
+    }
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+    {
+      erector = -127;
+    }
+
+		a_pressed_last_time = master.get_digital(pros::E_CONTROLLER_DIGITAL_A);
+		b_pressed_last_time = master.get_digital(pros::E_CONTROLLER_DIGITAL_B);
+    left_pressed_last_time = master.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT);
+    down_pressed_last_time = master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN);
+
+
+
     // chassis.arcade_standard(ez::SPLIT); // Standard split arcade
     // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
     // chassis.arcade_flipped(ez::SPLIT); // Flipped split arcade
