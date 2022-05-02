@@ -204,6 +204,14 @@ void opcontrol() {
     {
       erector = -127;
     }
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+    {
+      lift = 127;
+    }
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+    {
+      lift = -127;
+    }
 
 
 
