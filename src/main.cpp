@@ -30,7 +30,7 @@ Drive chassis (
   //    (or gear ratio of tracking wheel)
   // eg. if your drive is 84:36 where the 36t is powered, your RATIO would be 2.333.
   // eg. if your drive is 36:60 where the 60t is powered, your RATIO would be 0.6.
-  ,0.6
+  ,1.667
 
   // Uncomment if using tracking wheels
 
@@ -191,7 +191,7 @@ void opcontrol() {
       flipping_engaged = !flipping_engaged;
       flipping.set_value(flipping_engaged);
     }
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN))
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP))
     {
       pto_engaged = !pto_engaged;
       pto.set_value(pto_engaged);
