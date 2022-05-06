@@ -184,15 +184,15 @@ void opcontrol() {
       Extendo_engaged = !Extendo_engaged;
       Extendo.set_value(Extendo_engaged);
     }
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP)){
       flipping_engaged = !flipping_engaged;
       flipping.set_value(flipping_engaged);
     }
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
       pto_engaged = !pto_engaged;
       pto.set_value(pto_engaged);
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
       erector = 127;
     }
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
