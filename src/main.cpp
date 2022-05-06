@@ -48,10 +48,9 @@ Drive chassis (
   // 3 Wire Port Expander Smart Port
   // ,1
 );
-
 bool boner_clamp_engaged = false, ass_clamp_engaged = true; bool Extendo_engaged = false, flipping_engaged = false; bool pto_engaged = false;
 bool a_pressed_last_time = false, b_pressed_last_time = false; bool left_pressed_last_time = false; bool down_pressed_last_time = false; bool up_pressed_last_time = false;
-
+bool liftStage = true;
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -62,6 +61,7 @@ void initialize() {
   pros::lcd::initialize();
 
 	// reset clamps
+  erector.tare_position();
 	boner_clamp.set_value(false);
 	ass_clamp.set_value(true);
   flipping.set_value(false);
@@ -107,6 +107,16 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
+ void toggleLiftStage(){
+	if(liftStage){
+		liftStage = !liftStage;
+		erector.move_absolute(1200, 127);
+	}
+	else{
+    liftStage = !liftStage;
+		erector.move_absolute(0, 127);
+  }
+}
 void disabled() {
   // . . .
 }
@@ -188,20 +198,17 @@ void opcontrol() {
       flipping_engaged = !flipping_engaged;
       flipping.set_value(flipping_engaged);
     }
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1)){
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){
       pto_engaged = !pto_engaged;
       pto.set_value(pto_engaged);
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
-      erector = 127;
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+      toggleLiftStage();
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-      erector = -127;
-    }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       lift = 127;
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       lift = -127;
     }
     // chassis.arcade_standard(ez::SPLIT); // Standard split arcade
