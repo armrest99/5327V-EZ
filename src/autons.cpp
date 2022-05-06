@@ -67,14 +67,14 @@ void modified_exit_condition() {
 
 void east_side() {
   ass_clamp.set_value(false);
-  erector = 127;
+  erector.move_absolute(1525, 127);
   chassis.set_drive_pid(2.2480315, 127, true);
   chassis.wait_drive();
   pto.set_value(false);
   chassis.set_drive_pid(36, 127, true);
   chassis.wait_drive();
   boner_clamp.set_value(true);
-  erector = -127;
+  erector.move_absolute(0, 127);
   pto.set_value(true);
   chassis.set_drive_pid(-24, DRIVE_SPEED, true);
   chassis.set_swing_pid(ez::LEFT_SWING, -55, TURN_SPEED);
@@ -100,14 +100,14 @@ void east_side() {
 }
 void west_side() {
   ass_clamp.set_value(false);
-  erector = 127;
+  erector.move_absolute(1525, 127);
   chassis.set_drive_pid(2.2480315, 127, true);
   chassis.wait_drive();
   pto.set_value(false);
   chassis.set_drive_pid(36, DRIVE_SPEED, true);
   chassis.wait_drive();
   boner_clamp.set_value(true);
-  erector = -127;
+  erector.move_absolute(0, 127);
   pto.set_value(true);
   chassis.set_drive_pid(-24, DRIVE_SPEED, true);
   chassis.set_swing_pid(ez::LEFT_SWING, -85, TURN_SPEED);
