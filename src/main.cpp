@@ -1,5 +1,6 @@
 #include "main.h"
 using namespace pros;
+#define START_ANG 35
 //e
 /////
 // For instalattion, upgrading, documentations and tutorials, check out website!
@@ -9,14 +10,14 @@ using namespace pros;
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {18, -6, -7}
+  {-7,13,-14}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{-10, 9, 3}
+  ,{1,-3,6}
 
   // IMU Port
-  ,12
+  ,6
 
   // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
   //    (or tracking wheel diameter)
@@ -48,7 +49,7 @@ Drive chassis (
   // ,1
 );
 
-bool boner_clamp_engaged = false, ass_clamp_engaged = true; bool Extendo_engaged = false, flipping_engaged = false; bool pto_engaged = true;
+bool boner_clamp_engaged = false, ass_clamp_engaged = true; bool Extendo_engaged = false, flipping_engaged = false; bool pto_engaged = false;
 bool a_pressed_last_time = false, b_pressed_last_time = false; bool left_pressed_last_time = false; bool down_pressed_last_time = false; bool up_pressed_last_time = false;
 
 /**
@@ -65,8 +66,8 @@ void initialize() {
 	ass_clamp.set_value(true);
   flipping.set_value(false);
   Extendo.set_value(false);
-  pto.set_value(true);
-
+  pto.set_value(false);
+  //imu.set_heading(START_ANG);
   // Print our branding over your terminal :D
   ez::print_ez_template();
 
@@ -171,50 +172,38 @@ void opcontrol() {
   while (true) {
 
     chassis.tank(); // Tank control
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A))
-        {
-            boner_clamp_engaged = !boner_clamp_engaged;
-            boner_clamp.set_value(boner_clamp_engaged);
-        }
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B))
-        {
-            ass_clamp_engaged = !ass_clamp_engaged;
-            ass_clamp.set_value(ass_clamp_engaged);
-        }
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT))
-    {
-      Extendo_engaged = !Extendo_engaged;
-            Extendo.set_value(Extendo_engaged);
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){
+      boner_clamp_engaged = !boner_clamp_engaged;
+      boner_clamp.set_value(boner_clamp_engaged);
     }
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN))
-    {
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){
+      ass_clamp_engaged = !ass_clamp_engaged;
+      ass_clamp.set_value(ass_clamp_engaged);
+    }
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)){
+      Extendo_engaged = !Extendo_engaged;
+      Extendo.set_value(Extendo_engaged);
+    }
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
       flipping_engaged = !flipping_engaged;
       flipping.set_value(flipping_engaged);
     }
-    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN))
-    {
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)){
       pto_engaged = !pto_engaged;
       pto.set_value(pto_engaged);
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
-    {
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       erector = 127;
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
-    {
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       erector = -127;
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
-    {
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
       lift = 127;
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-    {
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       lift = -127;
     }
-
-
-
     // chassis.arcade_standard(ez::SPLIT); // Standard split arcade
     // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
     // chassis.arcade_flipped(ez::SPLIT); // Flipped split arcade
