@@ -81,8 +81,9 @@ void east_side() {
   chassis.wait_drive();
   chassis.set_drive_pid(-12, DRIVE_SPEED, true);
   chassis.wait_drive();
-  ass_clamp.set_value(true);
-  chassis.set_drive_pid(12, DRIVE_SPEED, true);
+  chassis.set_swing_pid(ez::RIGHT_SWING, -25, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-12, DRIVE_SPEED, true);
   chassis.wait_drive();
   chassis.set_drive_pid(0, DRIVE_SPEED, true);
   chassis.wait_drive();
@@ -97,6 +98,27 @@ void east_side() {
 
   chassis.set_turn_pid(0, TURN_SPEED);
   chassis.wait_drive();*/
+}
+void east_sideSmall() {
+  ass_clamp.set_value(false);
+  erector.move_absolute(1525, 127);
+  chassis.set_drive_pid(2.2480315, 127, true);
+  chassis.wait_drive();
+  pto.set_value(false);
+  chassis.set_drive_pid(36, 127, true);
+  chassis.wait_drive();
+  boner_clamp.set_value(true);
+  erector.move_absolute(0, 127);
+  pto.set_value(true);
+  chassis.set_swing_pid(ez::RIGHT_SWING, -85, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-12, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  ass_clamp.set_value(false);
+  chassis.set_drive_pid(24, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(0, DRIVE_SPEED, true);
+  chassis.wait_drive();
 }
 void west_side() {
   ass_clamp.set_value(false);
@@ -114,14 +136,32 @@ void west_side() {
   chassis.wait_drive();
   chassis.set_drive_pid(-12, DRIVE_SPEED, true);
   chassis.wait_drive();
+  chassis.set_drive_pid(0, DRIVE_SPEED, true);
+  chassis.wait_drive();
+}
+
+void west_sideSmall() {
+  ass_clamp.set_value(false);
+  erector.move_absolute(1525, 127);
+  chassis.set_drive_pid(2.2480315, 127, true);
+  chassis.wait_drive();
+  pto.set_value(false);
+  chassis.set_drive_pid(40, DRIVE_SPEED, true);
+  chassis.wait_drive();
+  boner_clamp.set_value(true);
+  erector.move_absolute(0, 127);
+  pto.set_value(true);
+  chassis.set_drive_pid(-24, DRIVE_SPEED, true);
+  chassis.set_swing_pid(ez::LEFT_SWING, -85, TURN_SPEED);
+  chassis.wait_drive();
+  chassis.set_drive_pid(-12, DRIVE_SPEED, true);
+  chassis.wait_drive();
   ass_clamp.set_value(true);
   chassis.set_drive_pid(12, DRIVE_SPEED, true);
   chassis.wait_drive();
   chassis.set_drive_pid(0, DRIVE_SPEED, true);
   chassis.wait_drive();
 }
-
-///
 // Combining Turn + Drive
 ///
 void drive_and_turn() {
