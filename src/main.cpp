@@ -17,7 +17,7 @@ Drive chassis (
   ,{1,-3,6}
 
   // IMU Port
-  ,6
+  ,9
 
   // Wheel Diameter (Remember, 4" wheels are actually 4.125!)
   //    (or tracking wheel diameter)
@@ -211,8 +211,11 @@ void opcontrol() {
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       lift = 127;
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+    else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
       lift = -127;
+    }
+    else {
+      lift = 0;
     }
     // chassis.arcade_standard(ez::SPLIT); // Standard split arcade
     // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
