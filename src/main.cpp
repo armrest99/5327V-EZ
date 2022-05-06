@@ -109,12 +109,15 @@ void initialize() {
  */
  void toggleLiftStage(){
 	if(liftStage){
-		liftStage = !liftStage;
-		erector.move_absolute(1200, 127);
+    erector.move_absolute(1575, 127);
+    pros::delay(500);
+		liftStage = false;
+
 	}
-	else{
-    liftStage = !liftStage;
-		erector.move_absolute(0, 127);
+  else if(liftStage == false){
+    erector.move_absolute(0, 127);
+    pros::delay(500);
+    liftStage = true;
   }
 }
 void disabled() {
