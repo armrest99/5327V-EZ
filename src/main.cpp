@@ -48,7 +48,7 @@ Drive chassis (
   // 3 Wire Port Expander Smart Port
   // ,1
 );
-bool boner_clamp_engaged = false, ass_clamp_engaged = true; bool Extendo_engaged = false, flipping_engaged = false; bool pto_engaged = false;
+bool boner_clamp_engaged = true, ass_clamp_engaged = true; bool Extendo_engaged = false, flipping_engaged = false; bool pto_engaged = false;
 bool a_pressed_last_time = false, b_pressed_last_time = false; bool left_pressed_last_time = false; bool down_pressed_last_time = false; bool up_pressed_last_time = false;
 bool liftStage = true;
 /**
@@ -62,11 +62,10 @@ void initialize() {
 
 	// reset clamps
   erector.tare_position();
-	boner_clamp.set_value(false);
 	ass_clamp.set_value(true);
   flipping.set_value(false);
   Extendo.set_value(false);
-  pto.set_value(false);
+  //pto.set_value(true);
   //imu.set_heading(START_ANG);
   // Print our branding over your terminal :D
   ez::print_ez_template();
@@ -159,8 +158,21 @@ void autonomous() {
   chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
 
   //ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
-  void east_side();
+  //void east_side();
   //void west_side();
+  //west_sideSmall();
+  erector.move_absolute(1525, 127);
+  chassis.set_drive_pid(200, 127, true);
+  chassis.wait_drive();
+  boner_clamp.set_value(false);
+  pros::delay(100);
+  erector.move_absolute(0, 127);
+  chassis.set_drive_pid(-250, 127, true);
+  chassis.wait_drive();
+  chassis.set_drive_pid(0, 127, true);
+  chassis.wait_drive();
+
+
 }
 
 
